@@ -1,6 +1,7 @@
 package com.dailycodebuffer.ProductService.controller;
 
-import com.dailycodebuffer.ProductService.exception.NotFoundException;
+import com.dailycodebuffer.ProductService.exception.ProductServiceCustomException;
+import com.dailycodebuffer.ProductService.model.ErrorResponse;
 import com.dailycodebuffer.ProductService.model.ProductRequest;
 import com.dailycodebuffer.ProductService.model.ProductResponse;
 import com.dailycodebuffer.ProductService.service.ProductService;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping
 public class ProductController {
 
     @Autowired
@@ -31,8 +32,16 @@ public class ProductController {
         return new ResponseEntity<ProductResponse>(productResponse,HttpStatus.OK);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    private ResponseEntity<String> handleNotFoundException(NotFoundException ne) {
-        return new ResponseEntity<String>(ne.getMessage(), HttpStatus.NOT_FOUND);
+    @ExceptionHandler(ProductServiceCustomException.class)
+    private ResponseEntity<ErrorResponse> handleNotFoundException(ProductServiceCustomException ne) {
+        return new ResponseEntity<ErrorResponse>(ErrorResponse.builder().errorMessage(ne.getMessage())
+                .errorCode(ne.getErrorCode()).build(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("reduceQuantity/{id}/")
+    public ResponseEntity<Void> reduceQuantity(@PathVariable("id") long productId, @RequestParam("quantity") long quantity) {
+        productService.reduceQuantity(productId,quantity);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
