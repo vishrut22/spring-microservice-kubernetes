@@ -1,5 +1,6 @@
-package com.dailycodebuffer.PaymentService.model;
+package com.dailycodebuffer.OrderService.external.response;
 
+import com.dailycodebuffer.OrderService.model.PaymentMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

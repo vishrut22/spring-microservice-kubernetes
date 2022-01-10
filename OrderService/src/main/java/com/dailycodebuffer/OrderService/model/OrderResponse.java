@@ -17,12 +17,13 @@ public class OrderResponse {
     private Instant orderDate;
     private String orderStatus;
     private ProductDetails productDetails;
-
+    private PaymentDetails paymentDetails;
+    private long amount;
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    static class ProductDetails{
+    public static class ProductDetails{
         private String productName;
         private long productId;
     }
@@ -31,7 +32,7 @@ public class OrderResponse {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    static class PaymentDetails{
+    public static class PaymentDetails{
         private long paymentId;
         private PaymentMode paymentMode;
         private String paymentStatus;

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("reduceQuantity/{id}/")
+    @PutMapping("/reduceQuantity/{id}")
     public ResponseEntity<Void> reduceQuantity(@PathVariable("id") long productId, @RequestParam("quantity") long quantity) {
         productService.reduceQuantity(productId,quantity);
         return new ResponseEntity<Void>(HttpStatus.OK);

@@ -9,6 +9,8 @@ import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Log4j2
 public class CustomErrorDecoder implements ErrorDecoder {
@@ -16,7 +18,8 @@ public class CustomErrorDecoder implements ErrorDecoder {
     public Exception decode(String s, Response response) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-
+            log.info("::{}",response.request().url());
+            log.info("::{}",response.request().httpMethod());
             ErrorResponse errorResponse = objectMapper.readValue(response.body().asInputStream(), ErrorResponse.class);
             return new CustomException(errorResponse.getErrorMessage(), errorResponse.getErrorCode(), response.status());
         } catch (IOException e) {

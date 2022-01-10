@@ -1,11 +1,11 @@
 package com.dailycodebuffer.OrderService.external.response;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class ProductResponse {
     private long productId;
