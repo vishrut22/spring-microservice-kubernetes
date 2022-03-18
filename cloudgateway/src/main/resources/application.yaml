@@ -24,7 +24,6 @@ spring:
               args:
                 name: PAYMENT-SERVICE
                 fallbackuri: forward:/paymentServiceFallBack
-
         - id: PRODUCT-SERVICE
           uri: lb://PRODUCT-SERVICE
           predicates:
@@ -34,7 +33,7 @@ spring:
               args:
                 name: PRODUCT-SERVICE
                 fallbackuri: forward:/productServiceFallBack
-
+            - name: TokenRelay
 management:
   endpoint:
     gateway:
@@ -43,3 +42,10 @@ management:
     web:
       exposure:
         include: gateway
+
+#Sun Mar 13 13:28:26 IST 2022
+okta:
+  oauth2:
+    issuer: https://dev-02875322.okta.com/oauth2/default
+    client-id: 0oa4603aofl1jn4Vk5d7
+    client-secret: 8tT0PeHS7N0-nIJzjr4aoHXDo-4aQcHFvh0p-chy
