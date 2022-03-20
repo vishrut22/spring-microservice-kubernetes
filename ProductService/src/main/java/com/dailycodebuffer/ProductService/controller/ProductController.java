@@ -8,6 +8,7 @@ import com.dailycodebuffer.ProductService.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class ProductController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Void> addProduct(@RequestBody ProductRequest productRequest) {
         productService.addProduct(productRequest);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
@@ -28,6 +30,7 @@ public class ProductController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('Admin') || hasAuthority('Customer') || hasAuthority('SCOPE_internal')")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable("id") long productId) {
         ProductResponse productResponse = productService.getProductById(productId);
         return new ResponseEntity<ProductResponse>(productResponse,HttpStatus.OK);
@@ -41,6 +44,7 @@ public class ProductController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/reduceQuantity/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_internal')")
     public ResponseEntity<Void> reduceQuantity(@PathVariable("id") long productId, @RequestParam("quantity") long quantity) {
         productService.reduceQuantity(productId,quantity);
         return new ResponseEntity<Void>(HttpStatus.OK);

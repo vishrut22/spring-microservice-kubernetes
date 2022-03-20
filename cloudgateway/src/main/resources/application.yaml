@@ -33,7 +33,6 @@ spring:
               args:
                 name: PRODUCT-SERVICE
                 fallbackuri: forward:/productServiceFallBack
-            - name: TokenRelay
 management:
   endpoint:
     gateway:
@@ -49,3 +48,4 @@ okta:
     issuer: https://dev-02875322.okta.com/oauth2/default
     client-id: 0oa4603aofl1jn4Vk5d7
     client-secret: 8tT0PeHS7N0-nIJzjr4aoHXDo-4aQcHFvh0p-chy
+    audience: api://default

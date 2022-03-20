@@ -29,6 +29,7 @@ public class AuthenticationController {
                 .accessToken(client.getAccessToken().getTokenValue())
                 .idToken(oidcUser.getIdToken().getTokenValue())
                 .build();
+
         return new ResponseEntity(authenticationResponse
                 , HttpStatus.OK);
     }

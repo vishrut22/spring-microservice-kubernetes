@@ -19,7 +19,7 @@ public class CustomErrorDecoder implements ErrorDecoder {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             log.info("::{}",response.request().url());
-            log.info("::{}",response.request().httpMethod());
+            log.info("::{}",response.request().headers());
             ErrorResponse errorResponse = objectMapper.readValue(response.body().asInputStream(), ErrorResponse.class);
             return new CustomException(errorResponse.getErrorMessage(), errorResponse.getErrorCode(), response.status());
         } catch (IOException e) {
