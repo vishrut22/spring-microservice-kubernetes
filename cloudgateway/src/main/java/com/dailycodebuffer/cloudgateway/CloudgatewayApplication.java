@@ -9,8 +9,11 @@ import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 
@@ -25,7 +28,18 @@ public class CloudgatewayApplication {
 	public Customizer<ReactiveResilience4JCircuitBreakerFactory> defaultCustomizer() {
 		return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
 				.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
-				.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(10)).build()).build());
+				.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(30)).build()).build());
+	}
+
+	/*@Bean
+	KeyResolver userKeyResolver() {
+		return exchange -> Mono.just("1");
+	}*/
+	@Bean
+	KeyResolver authUserKeyResolver() {
+		return exchange -> ReactiveSecurityContextHolder.getContext()
+				.map(ctx -> ctx.getAuthentication()
+						.getPrincipal().toString());
 	}
 
 }

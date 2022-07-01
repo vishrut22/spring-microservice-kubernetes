@@ -14,3 +14,29 @@ spring:
       ddl-auto: update
   application:
     name: PRODUCT-SERVICE
+resilience4j:
+  circuitbreaker:
+    instances:
+      serviceA:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+  retry:
+    instances:
+      serviceA:
+        registerHealthIndicator: true
+        maxRetryAttempts: 5
+        waitDuration: 10s
+  ratelimiter:
+    instances:
+      serviceA:
+        registerHealthIndicator: false
+        limitForPeriod: 30
+        limitRefreshPeriod: 30s
+        timeoutDuration: 1s

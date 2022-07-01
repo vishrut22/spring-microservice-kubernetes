@@ -5,6 +5,8 @@ import com.dailycodebuffer.ProductService.model.ErrorResponse;
 import com.dailycodebuffer.ProductService.model.ProductRequest;
 import com.dailycodebuffer.ProductService.model.ProductResponse;
 import com.dailycodebuffer.ProductService.service.ProductService;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-
+    @RateLimiter(name="serviceA")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @PreAuthorize("hasAuthority('Admin')")
@@ -28,6 +30,7 @@ public class ProductController {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
+    @RateLimiter(name="serviceA")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('Admin') || hasAuthority('Customer') || hasAuthority('SCOPE_internal')")
@@ -48,5 +51,11 @@ public class ProductController {
     public ResponseEntity<Void> reduceQuantity(@PathVariable("id") long productId, @RequestParam("quantity") long quantity) {
         productService.reduceQuantity(productId,quantity);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @ExceptionHandler(RequestNotPermitted.class)
+    private ResponseEntity<ErrorResponse> handleRequestNotPermittedException(RequestNotPermitted ne) {
+        return new ResponseEntity<ErrorResponse>(ErrorResponse.builder().errorMessage(ne.getMessage())
+                .errorCode(ne.getMessage()).build(), HttpStatus.BAD_REQUEST);
     }
 }

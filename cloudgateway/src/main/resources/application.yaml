@@ -15,6 +15,10 @@ spring:
               args:
                 name: ORDER-SERVICE
                 fallbackuri: forward:/orderServiceFallBack
+            - name: RequestRateLimiter
+              args:
+                  redis-rate-limiter.replenishRate: 1
+                  redis-rate-limiter.burstCapacity: 1
         - id: PAYMENT-SERVICE
           uri: lb://PAYMENT-SERVICE
           predicates:
