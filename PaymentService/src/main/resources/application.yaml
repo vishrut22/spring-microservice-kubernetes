@@ -13,4 +13,4 @@ spring:
     hibernate:
       ddl-auto: update
   application:
-    name: payment-service
+    name: PAYMENT-SERVICE

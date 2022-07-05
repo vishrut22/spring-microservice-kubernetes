@@ -27,8 +27,7 @@ public class CloudgatewayApplication {
 
 	public Customizer<ReactiveResilience4JCircuitBreakerFactory> defaultCustomizer() {
 		return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
-				.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
-				.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(30)).build()).build());
+				.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults()).build());
 	}
 
 	/*@Bean
@@ -39,7 +38,18 @@ public class CloudgatewayApplication {
 	KeyResolver authUserKeyResolver() {
 		return exchange -> ReactiveSecurityContextHolder.getContext()
 				.map(ctx -> ctx.getAuthentication()
-						.getPrincipal().toString());
+						.getCredentials().toString());
 	}
+//Refresh token
+//Expiration time
+// Unit test case
+// integration test case
+// DockerFile - build image publish
+// Kubernetes deployment - MySQL
+// Cloud deployment using CI/CD
+// Monitoring all services
 
+//Spring boot microservice grpc
+// Spring boot mongodb
+// Microservice Golang
 }
