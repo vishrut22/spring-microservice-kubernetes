@@ -10,3 +10,12 @@ spring:
         git:
           uri: https://github.com/vishrut22/config-server
           clone-on-start: true
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_ADDRESS:localhost}
