@@ -1,15 +1,13 @@
 server:
   port: 8082
 spring:
-  h2:
-    console.enabled: true
   datasource:
-    url: jdbc:h2:file:/Users/vishrutmajmudar/order
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/orderdb
+    username: root
+    password: Admin1234
+    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
     hibernate:
       ddl-auto: update
   security:
