@@ -31,3 +31,7 @@ spring:
 logging:
   level:
     root: info
+
+microservice:
+  product: http://product-service-svc/product
+  payment: http://payment-service-svc/payment

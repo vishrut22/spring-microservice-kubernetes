@@ -12,6 +12,7 @@ import com.dailycodebuffer.OrderService.model.OrderResponse;
 import com.dailycodebuffer.OrderService.repository.OrderRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${microservice.product}")
+    private String productServiceUrl;
+
+    @Value("${microservice.payment}")
+    private String paymentServiceUrl;
 
     @Override
     public long placeOrder(OrderRequest orderRequest) {
@@ -71,9 +78,9 @@ public class OrderServiceImpl implements OrderService {
         Optional<Order> optOrderResponse = orderRepository.findById(orderId);
         Order order = optOrderResponse.orElseThrow(() -> new CustomException("Order not found.", "ORDER_NOT_FOUND", 404));
         log.debug("Invoking get Product using product service from product id : {}", order.getProductId());
-        ProductResponse productResponse = restTemplate.getForObject("http://PRODUCT-SERVICE/product/" + order.getProductId(), ProductResponse.class);
+        ProductResponse productResponse = restTemplate.getForObject(productServiceUrl +"/"+ order.getProductId(), ProductResponse.class);
         log.debug("Invoking get Payment details using payment service");
-        PaymentResponse paymentResponse = restTemplate.getForObject("http://PAYMENT-SERVICE/payment/?orderId=" + orderId, PaymentResponse.class);
+        PaymentResponse paymentResponse = restTemplate.getForObject(paymentServiceUrl +"/?orderId=" + orderId, PaymentResponse.class);
         log.debug("Preparing response for get order.");
         OrderResponse.ProductDetails productDetails = OrderResponse.ProductDetails.builder()
                 .productId(productResponse.getProductId())

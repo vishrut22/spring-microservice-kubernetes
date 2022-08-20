@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cloud-gateway-app
+  namespace: demo
   labels:
     app: cloud-gateway-app
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cloud-gateway-app
-          image: vishrut22/cloudgateway:0.0.1
+          image: vishrut22/cloudgateway:0.0.2
           imagePullPolicy: Always
           ports:
             - containerPort: 9090
@@ -26,16 +27,12 @@ spec:
                 configMapKeyRef:
                   name: config-cm
                   key: config_url
-            - name: EUREKA_SERVER_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  name: eureka-cm
-                  key: eureka_service_address
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: cloud-gateway-svc
+  namespace: demo
 spec:
   type: LoadBalancer
   ports:

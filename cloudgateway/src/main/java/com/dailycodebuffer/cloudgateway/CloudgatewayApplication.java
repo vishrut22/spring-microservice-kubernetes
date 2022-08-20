@@ -10,7 +10,6 @@ import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigB
 import org.springframework.cloud.client.circuitbreaker.Customizer;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import reactor.core.publisher.Mono;
@@ -18,7 +17,6 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 
 @SpringBootApplication
-@EnableEurekaClient
 public class CloudgatewayApplication {
 
 	public static void main(String[] args) {

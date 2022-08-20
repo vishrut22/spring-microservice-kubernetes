@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payment-service-app
+  namespace: demo
   labels:
     app: payment-service-app
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: payment-service-app
-          image: vishrut22/paymentservice:0.0.1
+          image: vishrut22/paymentservice:0.0.2
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
@@ -26,11 +27,6 @@ spec:
                 configMapKeyRef:
                   name: config-cm
                   key: config_url
-            - name: EUREKA_SERVER_ADDRESS
-              valueFrom:
-                configMapKeyRef:
-                  name: eureka-cm
-                  key: eureka_service_address
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
@@ -41,6 +37,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: payment-service-svc
+  namespace: demo
 spec:
   ports:
     - targetPort: 8081

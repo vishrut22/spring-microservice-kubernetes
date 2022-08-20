@@ -50,16 +50,16 @@ public class OrderServiceimplTest {
         //mock
         Order order = getMockOrder();
         when(orderRepository.findById(anyLong())).thenReturn(Optional.of(order));
-        when(restTemplate.getForObject("http://PRODUCT-SERVICE/product/" + order.getProductId(), ProductResponse.class)).thenReturn(getMockProductResponse());
-        when(restTemplate.getForObject("http://PAYMENT-SERVICE/payment/?orderId=" + order.getId(), PaymentResponse.class)).thenReturn(getMockPaymentResponse());
+        when(restTemplate.getForObject("http://product-service-svc/product/" + order.getProductId(), ProductResponse.class)).thenReturn(getMockProductResponse());
+        when(restTemplate.getForObject("http://payment-service-svc/payment/?orderId=" + order.getId(), PaymentResponse.class)).thenReturn(getMockPaymentResponse());
 
         //act
         OrderResponse orderResponse = orderService.getOrderDetails(1);
 
         //Check number of calls
         verify(orderRepository, times(1)).findById(anyLong());
-        verify(restTemplate , times(1)).getForObject("http://PRODUCT-SERVICE/product/" + order.getProductId(), ProductResponse.class);
-        verify(restTemplate , times(1)).getForObject("http://PAYMENT-SERVICE/payment/?orderId=" + order.getId(), PaymentResponse.class);
+        verify(restTemplate , times(1)).getForObject("http://product-service-svc/product/" + order.getProductId(), ProductResponse.class);
+        verify(restTemplate , times(1)).getForObject("http://payment-service-svc/payment/?orderId=" + order.getId(), PaymentResponse.class);
 
         //assert
         assertNotNull(orderResponse);

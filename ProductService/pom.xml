@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.dailycodebuffer</groupId>
 	<artifactId>ProductService</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>ProductService</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -29,10 +29,6 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>

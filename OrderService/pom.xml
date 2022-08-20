@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.dailycodebuffer</groupId>
 	<artifactId>OrderService</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>OrderService</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -49,7 +49,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>

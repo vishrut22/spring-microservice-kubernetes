@@ -7,7 +7,7 @@ spring:
     gateway:
       routes:
         - id: ORDER-SERVICE
-          uri: lb://ORDER-SERVICE
+          uri: http://order-service-svc
           predicates:
             - Path=/order/**
           filters:
@@ -20,7 +20,7 @@ spring:
                   redis-rate-limiter.replenishRate: 1
                   redis-rate-limiter.burstCapacity: 1
         - id: PAYMENT-SERVICE
-          uri: lb://PAYMENT-SERVICE
+          uri: http://payment-service-svc
           predicates:
             - Path=/payment/**
           filters:
@@ -29,7 +29,7 @@ spring:
                 name: PAYMENT-SERVICE
                 fallbackuri: forward:/paymentServiceFallBack
         - id: PRODUCT-SERVICE
-          uri: lb://PRODUCT-SERVICE
+          uri: http://product-service-svc
           predicates:
             - Path=/product/**
           filters:

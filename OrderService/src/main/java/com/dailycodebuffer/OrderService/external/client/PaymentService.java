@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient( name = "PAYMENT-SERVICE/payment")
+@FeignClient(name = "payment" , url = "${microservice.payment}")
 public interface PaymentService {
     @RequestMapping(method = RequestMethod.POST)
     public void doPayment(@RequestBody PaymentRequest paymentRequest);

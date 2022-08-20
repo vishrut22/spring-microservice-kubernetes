@@ -2,13 +2,15 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-cm
+  namespace: demo
 data:
   hostname: "mysql"
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv
+  name: mysql-pv-new
+  namespace: demo
   labels:
     type: local
 spec:
@@ -23,7 +25,8 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-pv-claim
+  name: mysql-pv-claim-new
+  namespace: demo
 spec:
   storageClassName: manual
   accessModes:
@@ -36,6 +39,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
+  namespace: demo
 spec:
   selector:
     matchLabels:
@@ -67,12 +71,13 @@ spec:
             name: mysql-initdb-config
         - name: mysql-persistent-storage
           persistentVolumeClaim:
-            claimName: mysql-pv-claim
+            claimName: mysql-pv-claim-new
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-initdb-config
+  namespace: demo
 data:
   init.sql: |
     CREATE DATABASE IF NOT EXISTS orderdb;
@@ -83,6 +88,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
+  namespace: demo
   labels:
     app: mysql
 spec:
