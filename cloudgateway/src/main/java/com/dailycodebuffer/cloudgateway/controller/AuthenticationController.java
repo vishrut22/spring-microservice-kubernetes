@@ -28,6 +28,8 @@ public class AuthenticationController {
                 .userId(oidcUser.getEmail())
                 .accessToken(client.getAccessToken().getTokenValue())
                 .idToken(oidcUser.getIdToken().getTokenValue())
+                .refereshToken(client.getRefreshToken().getTokenValue())
+                .expiresAt(client.getAccessToken().getExpiresAt().getEpochSecond())
                 .build();
 
         return new ResponseEntity(authenticationResponse

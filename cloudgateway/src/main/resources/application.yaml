@@ -53,3 +53,4 @@ okta:
     client-id: 0oa4603aofl1jn4Vk5d7
     client-secret: 8tT0PeHS7N0-nIJzjr4aoHXDo-4aQcHFvh0p-chy
     audience: api://default
+    scopes: openid, email, profile, offline_access

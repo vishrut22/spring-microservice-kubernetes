@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,5 +18,7 @@ public class AuthenticationResponse {
     private String accessToken;
     private String idToken;
     private String userId;
+    private String refereshToken;
     private Collection<String> authorityList;
+    private long expiresAt;
 }
