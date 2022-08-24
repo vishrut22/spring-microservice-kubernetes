@@ -48,32 +48,46 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>1.4.13</version>
-				<executions>
-					<execution>
-						<id>default</id>
-						<goals>
-							<goal>build</goal>
-							<goal>push</goal>
-						</goals>
-					</execution>
-				</executions>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
 				<configuration>
-					<repository>vishrut22/serviceregistry</repository>
-					<tag>${project.version}</tag>
-					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+					<from>
+						<image>openjdk:11</image>
+					</from>
+					<to>
+						<image>registry.hub.docker.com/vishrut22/serviceregistry</image>
+						<tags>${project.version}</tags>
+					</to>
 				</configuration>
-				<dependencies>
-					<!-- To make this work on JDK 9+ -->
-					<dependency>
-						<groupId>javax.activation</groupId>
-						<artifactId>javax.activation-api</artifactId>
-						<version>1.2.0</version>
-					</dependency>
-				</dependencies>
 			</plugin>
+			<!-- Not using now -->
+<!--			<plugin>-->
+<!--				<groupId>com.spotify</groupId>-->
+<!--				<artifactId>dockerfile-maven-plugin</artifactId>-->
+<!--				<version>1.4.13</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>default</id>-->
+<!--						<goals>-->
+<!--							<goal>build</goal>-->
+<!--							<goal>push</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--				<configuration>-->
+<!--					<repository>vishrut22/serviceregistry</repository>-->
+<!--					<tag>${project.version}</tag>-->
+<!--					<useMavenSettingsForAuth>true</useMavenSettingsForAuth>-->
+<!--				</configuration>-->
+<!--				<dependencies>-->
+<!--					&lt;!&ndash; To make this work on JDK 9+ &ndash;&gt;-->
+<!--					<dependency>-->
+<!--						<groupId>javax.activation</groupId>-->
+<!--						<artifactId>javax.activation-api</artifactId>-->
+<!--						<version>1.2.0</version>-->
+<!--					</dependency>-->
+<!--				</dependencies>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 

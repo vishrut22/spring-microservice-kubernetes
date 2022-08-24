@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: config-cm
-  namespace: demo
-data:
-  config_url: "http://cloud-config-server-svc"
