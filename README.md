@@ -20,6 +20,7 @@ To build and push to docker : mvn clean install jlib:build
 ## Applying kubernates configuration to make pod running.
 
 Go to k8s directory which contains 
+- Apply config maps first : kubectl apply -f generic-config-map.yaml
 - Setting up mysql pod : kubectl apply -f mysql.yaml
 This yaml contains mysql password as well , you can use secrets/config for passwords too.
 - Set up zipkin : kubectl apply -f zipkin.yaml
