@@ -56,7 +56,7 @@ import static org.springframework.util.StreamUtils.copyToString;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.*;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.*;
 
-@SpringBootTest({"server.port:0", "eureka.client.enabled:false"})
+@SpringBootTest({"server.port:0"})
 @EnableConfigurationProperties
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc

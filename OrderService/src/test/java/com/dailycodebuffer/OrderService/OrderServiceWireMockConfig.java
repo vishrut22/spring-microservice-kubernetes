@@ -18,7 +18,7 @@ public class OrderServiceWireMockConfig {
         return new WireMockServer(options().dynamicPort());
     }
 
-    @Bean
+   // @Bean
     public ServiceInstanceListSupplier serviceInstanceListSupplier(){
         return new TestServiceInstanceListSupplier();
     }

@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: zipkin
+  namespace: demo
 spec:
   replicas: 1
   selector:
@@ -23,6 +24,7 @@ metadata:
   labels:
     name: zipkin
   name: zipkin
+  namespace: demo
 spec:
   ports:
     - port: 9411
@@ -34,6 +36,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: zipkin-svc
+  namespace: demo
 spec:
   type: LoadBalancer
   ports:

@@ -32,7 +32,6 @@ public class OrderServiceApplication {
 	OAuth2AuthorizedClientRepository authorizedClientRepository;
 
 	@Bean
-	@LoadBalanced
 	public RestTemplate restTemplate(){
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.setInterceptors(Arrays.asList(new RestTemplateInterceptor(authorizedClientManager(clientRegistrationRepository,authorizedClientRepository))));

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import reactor.core.publisher.Mono;
 
+import java.sql.Time;
 import java.time.Duration;
 
 @SpringBootApplication
@@ -23,9 +24,12 @@ public class CloudgatewayApplication {
 		SpringApplication.run(CloudgatewayApplication.class, args);
 	}
 
+	@Bean
 	public Customizer<ReactiveResilience4JCircuitBreakerFactory> defaultCustomizer() {
 		return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
-				.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults()).build());
+				.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
+				.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(30)).build())
+				.build());
 	}
 
 	/*@Bean

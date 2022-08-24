@@ -11,12 +11,16 @@ import com.dailycodebuffer.OrderService.model.OrderRequest;
 import com.dailycodebuffer.OrderService.model.OrderResponse;
 import com.dailycodebuffer.OrderService.model.PaymentMode;
 import com.dailycodebuffer.OrderService.repository.OrderRepository;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.Instant;
@@ -44,22 +48,34 @@ public class OrderServiceimplTest {
     @InjectMocks
     OrderService orderService = new OrderServiceImpl();
 
+    @Value("${microservice.product}")
+    private String productServiceUrl;
+
+    @Value("${microservice.payment}")
+    private String paymentServiceUrl;
+
+    @BeforeEach
+    public void setup() {
+        ReflectionTestUtils.setField(orderService ,"productServiceUrl",productServiceUrl );
+        ReflectionTestUtils.setField(orderService ,"paymentServiceUrl",paymentServiceUrl );
+    }
     @DisplayName("Get Order - Success Scenario")
     @Test
     void test_whenGetOrder_success(){
         //mock
         Order order = getMockOrder();
         when(orderRepository.findById(anyLong())).thenReturn(Optional.of(order));
-        when(restTemplate.getForObject("http://product-service-svc/product/" + order.getProductId(), ProductResponse.class)).thenReturn(getMockProductResponse());
-        when(restTemplate.getForObject("http://payment-service-svc/payment/?orderId=" + order.getId(), PaymentResponse.class)).thenReturn(getMockPaymentResponse());
+        System.out.println(productServiceUrl);
+        when(restTemplate.getForObject(productServiceUrl+"/" + order.getProductId(), ProductResponse.class)).thenReturn(getMockProductResponse());
+        when(restTemplate.getForObject(paymentServiceUrl + "/?orderId=" + order.getId(), PaymentResponse.class)).thenReturn(getMockPaymentResponse());
 
         //act
         OrderResponse orderResponse = orderService.getOrderDetails(1);
 
         //Check number of calls
         verify(orderRepository, times(1)).findById(anyLong());
-        verify(restTemplate , times(1)).getForObject("http://product-service-svc/product/" + order.getProductId(), ProductResponse.class);
-        verify(restTemplate , times(1)).getForObject("http://payment-service-svc/payment/?orderId=" + order.getId(), PaymentResponse.class);
+        verify(restTemplate , times(1)).getForObject(productServiceUrl+"/" + order.getProductId(), ProductResponse.class);
+        verify(restTemplate , times(1)).getForObject(paymentServiceUrl+"/?orderId=" + order.getId(), PaymentResponse.class);
 
         //assert
         assertNotNull(orderResponse);

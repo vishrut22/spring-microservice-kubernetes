@@ -29,10 +29,6 @@ spring:
 logging:
   level:
     root: info
-eureka:
-  client:
-    enabled: false
-
 microservice:
-  product: http://product-service-svc/product
-  payment: http://payment-service-svc/payment
+  product: http://localhost:8080/product
+  payment: http://localhost:8080/payment
