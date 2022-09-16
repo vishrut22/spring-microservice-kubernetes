@@ -10,15 +10,6 @@ spring:
           uri: http://order-service-svc
           predicates:
             - Path=/order/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: ORDER-SERVICE
-                fallbackuri: forward:/orderServiceFallBack
-            - name: RequestRateLimiter
-              args:
-                  redis-rate-limiter.replenishRate: 1
-                  redis-rate-limiter.burstCapacity: 1
         - id: PAYMENT-SERVICE
           uri: http://payment-service-svc
           predicates:
@@ -41,10 +32,20 @@ management:
   endpoint:
     gateway:
       enabled: true
+    health:
+      probes:
+        enabled: true
   endpoints:
     web:
       exposure:
-        include: gateway
+        include: gateway,health
+  health:
+    redis:
+      enabled: true
+    readinessState:
+      enabled: true
+    livenessState:
+      enabled: true
 
 #Sun Mar 13 13:28:26 IST 2022
 okta:
@@ -57,4 +58,4 @@ okta:
 
 logging:
   level:
-    root: INFO
+    root: ERROR
