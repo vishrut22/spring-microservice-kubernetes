@@ -32,6 +32,9 @@ spring:
                 name: PRODUCT-SERVICE
                 fallbackuri: forward:/productServiceFallBack
 management:
+  metrics:
+    tags:
+      application : ${spring.application.name}
   endpoint:
     gateway:
       enabled: true
@@ -41,7 +44,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: gateway,health
+        include: gateway,health,metrics,prometheus
   health:
     redis:
       enabled: true
@@ -50,7 +53,6 @@ management:
     livenessState:
       enabled: true
 
-#Sun Mar 13 13:28:26 IST 2022
 okta:
   oauth2:
     issuer: https://dev-02875322.okta.com/oauth2/default
